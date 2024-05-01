@@ -15,15 +15,20 @@ class Program
         //Writing text showing user the input and action
         Console.WriteLine($"Searching for {searchWord}...");
 
+        //Starting an instance of StreamWriter with outPutFile as parameter.
         StreamWriter writer = new StreamWriter(outPutFile);
 
+        //Calling method SearchFiles
         SearchFiles(startFolder, searchWord, writer);
 
+        //Close StreamWriter
         writer.Close();
 
+        //Search time is noted
         DateTime endTime = DateTime.Now;
         var searchTime = endTime - startTime;
         
+        //Output to console
         Console.WriteLine($"Search complete in time: {searchTime:hh\\:mm\\:ss}. Output written to: " + outPutFile);
         Console.ReadLine();
     }
@@ -32,7 +37,9 @@ class Program
     {
         try
         {
-            //foreach (string filePath in Directory.GetFiles(folderPath, "*.xml").Concat(Directory.GetFiles(folderPath, "*.xaml")))
+            //Returns the names of files (including their path) that match the specified
+            //search pattern in the specified directory
+            //XML://foreach (string filePath in Directory.GetFiles(folderPath, "*.xml").Concat(Directory.GetFiles(folderPath, "*.xaml")))
             foreach (string filePath in Directory.GetFiles(folderPath, "*.txt"))
             {
                 string fileContent = File.ReadAllText(filePath);
@@ -48,7 +55,7 @@ class Program
                     writer.WriteLine($"{filePath}");
                 }
             }
-
+            //Do the same search for subfolders
             foreach (string subFolderPath in Directory.GetDirectories(folderPath))
             {
                 SearchFiles(subFolderPath, searchWord, writer);
